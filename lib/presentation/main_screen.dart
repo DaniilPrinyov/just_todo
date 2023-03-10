@@ -27,8 +27,10 @@ class _MainScreenState extends State<MainScreen> {
         onPressed: () => showDialog(
           context: context,
           builder: (BuildContext context) => AlertDialog(
+            backgroundColor: Colors.white,
             title: const Text('Add tasks'),
             content: TextField(
+              maxLines: 2,
               decoration: const InputDecoration(
                 focusedBorder: OutlineInputBorder(),
                 border: OutlineInputBorder(),
@@ -72,13 +74,14 @@ class _MainScreenState extends State<MainScreen> {
         child: const Icon(
           Icons.add,
           size: 40,
+          color: Colors.white,
         ),
       ),
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text(
           "Just ToDo",
-          style: TextStyle(fontSize: 30),
+          style: TextStyle(fontSize: 30, color: Colors.white),
         ),
       ),
       body: ListView.builder(

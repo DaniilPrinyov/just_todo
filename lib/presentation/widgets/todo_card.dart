@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:just_todo/presentation/main_screen.dart';
 
+// ignore: must_be_immutable
 class ToDoCard extends StatefulWidget {
   ToDoCard({
     super.key,
@@ -19,10 +19,8 @@ class _ToDoCardState extends State<ToDoCard> {
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
-    void delateTask(index) {}
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      height: 100,
       decoration: const BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -35,22 +33,27 @@ class _ToDoCardState extends State<ToDoCard> {
             value: isChecked,
             onChanged: (value) {
               setState(() {
-                isChecked = value!;
+                isChecked = value ?? false;
               });
             },
           ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width - 130,
-            child: Text(
-              widget.toDoText,
-              maxLines: 1,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 25,
-                overflow: TextOverflow.ellipsis,
-                decoration: isChecked
-                    ? TextDecoration.lineThrough
-                    : TextDecoration.none,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: LimitedBox(
+              maxWidth: MediaQuery.of(context).size.width - 130,
+              maxHeight: MediaQuery.of(context).size.height / 3,
+              child: Text(
+                widget.toDoText,
+                maxLines: 5,
+                style: TextStyle(
+                  color: Colors.white,
+                  decorationColor: Colors.white,
+                  fontSize: 25,
+                  overflow: TextOverflow.ellipsis,
+                  decoration: isChecked
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
+                ),
               ),
             ),
           ),
