@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:just_todo/internal/model/to_do_card_model.dart';
 
 // ignore: must_be_immutable
-class ToDoCard extends StatefulWidget {
-  ToDoCard({
+class ToDoCardWidget extends StatefulWidget {
+  ToDoCardWidget({
     super.key,
-    required this.toDoText,
+    required this.toDoObject,
     required this.deleteFunc,
   });
 
-  String toDoText;
+  ToDoCardModel toDoObject;
   Function(BuildContext)? deleteFunc;
 
   @override
-  State<ToDoCard> createState() => _ToDoCardState();
+  State<ToDoCardWidget> createState() => _ToDoCardWidgetState();
 }
 
-class _ToDoCardState extends State<ToDoCard> {
-  bool isChecked = false;
+class _ToDoCardWidgetState extends State<ToDoCardWidget> {
   @override
   Widget build(BuildContext context) {
+    bool isChecked = widget.toDoObject.isComplete;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: const BoxDecoration(
@@ -43,7 +44,7 @@ class _ToDoCardState extends State<ToDoCard> {
               maxWidth: MediaQuery.of(context).size.width - 130,
               maxHeight: MediaQuery.of(context).size.height / 3,
               child: Text(
-                widget.toDoText,
+                widget.toDoObject.toDoText,
                 maxLines: 5,
                 style: TextStyle(
                   color: Colors.white,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:just_todo/data/hive_storage.dart';
+import 'package:just_todo/internal/model/to_do_card_model.dart';
 import 'package:just_todo/presentation/widgets/todo_card.dart';
-
-List<String> toDoList = [];
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -15,7 +15,7 @@ TextEditingController textController = TextEditingController();
 class _MainScreenState extends State<MainScreen> {
   void deleteTask(int index) {
     setState(() {
-      toDoList.removeAt(index);
+      HiveStorage().kill(index);
     });
   }
 
@@ -58,7 +58,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 onPressed: () {
                   setState(() {
-                    toDoList.add(textController.text);
+                    HiveStorage().add(textController.text);
                   });
                   textController.text = "";
                   Navigator.pop(context, 'Add');
@@ -84,12 +84,26 @@ class _MainScreenState extends State<MainScreen> {
           style: TextStyle(fontSize: 30, color: Colors.white),
         ),
       ),
-      body: ListView.builder(
-        itemCount: toDoList.length,
-        itemBuilder: (context, index) => ToDoCard(
-          toDoText: toDoList[index],
-          deleteFunc: (context) => deleteTask(index),
-        ),
+      body: FutureBuilder(
+        future: HiveStorage().length(),
+        builder: (context, snapshot) {
+          return ListView.builder(
+            itemCount: snapshot.data,
+            itemBuilder: (context, index) => FutureBuilder(
+              future: HiveStorage().get(index),
+              builder: (context, snapshot) {
+                return ToDoCardWidget(
+                  toDoObject: snapshot.data ??
+                      ToDoCardModel(
+                        toDoText: "Добавьте первую запись",
+                        isComplete: false,
+                      ),
+                  deleteFunc: (context) => deleteTask(index),
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }
