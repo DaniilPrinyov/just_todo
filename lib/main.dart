@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-import 'package:just_todo/data/hive_storage.dart';
+import 'package:just_todo/internal/model/register_adapter.dart';
 import 'package:just_todo/presentation/main_screen.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -9,6 +8,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appDocumentDirectory = await getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
+  Hive.registerAdapter(ToDoCardAdapter());
   runApp(const MyApp());
 }
 

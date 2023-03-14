@@ -38,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
               controller: textController,
               cursorColor: Colors.black,
             ),
-            actions: <Widget>[
+            actions: [
               TextButton(
                 style: ButtonStyle(
                   overlayColor: MaterialStateProperty.all(Colors.grey[300]),
@@ -58,7 +58,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 onPressed: () {
                   setState(() {
-                    HiveStorage().add(textController.text);
+                    HiveStorage().add(textController.text, isComplete: false);
                   });
                   textController.text = "";
                   Navigator.pop(context, 'Add');
@@ -88,7 +88,7 @@ class _MainScreenState extends State<MainScreen> {
         future: HiveStorage().length(),
         builder: (context, snapshot) {
           return ListView.builder(
-            itemCount: snapshot.data,
+            itemCount: snapshot.data ?? 0,
             itemBuilder: (context, index) => FutureBuilder(
               future: HiveStorage().get(index),
               builder: (context, snapshot) {

@@ -18,8 +18,13 @@ class HiveStorage {
 
   Future<ToDoCardModel> get(int index) async {
     final box = await Hive.openBox<ToDoCardModel>('ToDoInfo');
-    final result =
-        box.getAt(index) ?? ToDoCardModel(toDoText: "error", isComplete: false);
+    final result = (box.isOpen)
+        ? box.getAt(index) ??
+            ToDoCardModel(toDoText: "error", isComplete: false)
+        : ToDoCardModel(
+            toDoText: "Добавьте первую запись",
+            isComplete: false,
+          );
     await box.close();
     return result;
   }

@@ -1,4 +1,6 @@
-class ToDoCardModel {
+import 'package:hive_flutter/hive_flutter.dart';
+
+class ToDoCardModel extends HiveObject {
   String toDoText;
   bool isComplete;
 
