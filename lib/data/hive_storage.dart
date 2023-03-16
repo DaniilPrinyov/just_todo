@@ -35,4 +35,9 @@ class HiveStorage {
     await box.close();
     return result;
   }
+
+  Future<void> dalethFromDick() async {
+    final box = await Hive.openBox<ToDoCardModel>('ToDoInfo');
+    box.deleteFromDisk();
+  }
 }

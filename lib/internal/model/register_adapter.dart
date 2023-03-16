@@ -3,7 +3,7 @@ import 'package:just_todo/internal/model/to_do_card_model.dart';
 
 class ToDoCardAdapter extends TypeAdapter<ToDoCardModel> {
   @override
-  final typeId = 0;
+  final typeId = 1;
 
   @override
   ToDoCardModel read(BinaryReader reader) {

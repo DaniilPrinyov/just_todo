@@ -36,11 +36,13 @@ class _ToDoCardWidgetState extends State<ToDoCardWidget> {
                 checkColor: Colors.black,
                 value: isChecked,
                 onChanged: (value) {
-                  setState(() {
-                    print(isChecked);
-                    isChecked = value ?? false;
-                    print(isChecked);
-                  });
+                  setState(
+                    () {
+                      print(isChecked);
+                      isChecked = value!;
+                      print(isChecked);
+                    },
+                  );
                 },
               ),
               Padding(
